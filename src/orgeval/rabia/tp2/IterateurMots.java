@@ -1,7 +1,6 @@
 package orgeval.rabia.tp2;
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 public class IterateurMots implements Iterator<String> {
 
@@ -10,8 +9,12 @@ public class IterateurMots implements Iterator<String> {
 
     public IterateurMots(Object[] tab) {
         this.objet = tab;
-        for (Object o : objet) {
-            if (o == null) cursor++;
+        this.cursor = 0;
+
+        int i = 0;
+        while (objet[i] == null && i != objet.length-1) {
+            cursor++;
+            i++;
         }
     }
 
@@ -21,22 +24,18 @@ public class IterateurMots implements Iterator<String> {
     }
 
     @Override
-    public void forEachRemaining(Consumer<? super String> action) {
-
-    }
-
-    @Override
     public boolean hasNext() {
-        return cursor + 1 < objet.length;
+        return cursor < objet.length-1;
     }
 
     @Override
     public String next() {
         StringBuilder ret = new StringBuilder();
         while (objet[cursor] != null) {
-            cursor++;
             ret.append(objet[cursor]);
+            cursor++;
         }
+        while (objet[cursor] == null && cursor != objet.length-1) cursor++;
         return ret.toString();
     }
 }

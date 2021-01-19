@@ -36,9 +36,14 @@ public class Grille {
 
     @Override
     public String toString() {
-        return "Grille{" +
-                "hauteur=" + tab.length +
-                ", largeur=" + tab[0].length +
-                '}';
+        StringBuilder result = new StringBuilder();
+        for (int l = 1; l <= this.getHauteur(); l++) {
+            for (int c = 1; c <= this.getLargeur(); c++) {
+                result.append(this.getCellule(l, c));
+                if (c != this.getLargeur()) result.append("|");
+            }
+            result.append("\n");
+        }
+        return result.toString();
     }
 }
