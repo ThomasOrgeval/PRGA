@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class MultiEnsGen<T> implements SpecifMultiEnsGen<T>{
 
-    HashMap<T, Integer> map;
+    protected HashMap<T, Integer> map;
 
     public MultiEnsGen() {
         this.map = new HashMap<>();
