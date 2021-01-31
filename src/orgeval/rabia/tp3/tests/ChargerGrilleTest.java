@@ -9,7 +9,7 @@ public class ChargerGrilleTest {
     @Test
     public final void testExtraireGrille() {
         MotsCroises motsCroises = ChargerGrille.extraireGrille(10);
-
+        System.out.println("test");
     }
 
 }

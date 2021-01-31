@@ -1,6 +1,6 @@
 package orgeval.rabia.tp1;
 
-public class MotsCroises extends Grille{
+public class MotsCroises extends Grille {
 
     protected boolean[][] noire;
     protected Character[][] solution, proposition;
@@ -19,8 +19,19 @@ public class MotsCroises extends Grille{
     }
 
     public void setCaseNoire(int lig, int col, boolean b) {
-        if(coordCorrectes(lig, col)) this.noire[lig - 1][col - 1] = b;
-        else throw new AssertionError("Cette case n'existe pas");
+        if (coordCorrectes(lig, col)) {
+            if (coordCorrectes(lig, col)) this.noire[lig - 1][col - 1] = b;
+            else throw new AssertionError("Cette case n'existe pas");
+        }
+    }
+
+    public void setGrilleNoire() {
+        for (int i = 1; i <= this.getHauteur(); i++) {
+            for (int j = 1; j <= this.getLargeur(); j++) {
+                setCaseNoire(i, j, true);
+                setSolution(i, j, '*');
+            }
+        }
     }
 
     public Object getDefinition(int lig, int col, boolean b) {
@@ -29,8 +40,10 @@ public class MotsCroises extends Grille{
     }
 
     public void setDefinition(int lig, int col, boolean b, String s) {
-        if (b) this.horizontal[lig - 1][col - 1] = s;
-        else this.tab[lig - 1][col - 1] = s;
+        if (coordCorrectes(lig, col)) {
+            if (b) this.horizontal[lig - 1][col - 1] = s;
+            else this.tab[lig - 1][col - 1] = s;
+        }
     }
 
     public Object getSolution(int lig, int col) {
@@ -38,7 +51,7 @@ public class MotsCroises extends Grille{
     }
 
     public void setSolution(int lig, int col, char lettre) {
-        this.solution[lig - 1][col - 1] = lettre;
+        if (coordCorrectes(lig, col)) this.solution[lig - 1][col - 1] = lettre;
     }
 
     public Object getProposition(int lig, int col) {
@@ -46,6 +59,6 @@ public class MotsCroises extends Grille{
     }
 
     public void setProposition(int lig, int col, char lettre) {
-        this.proposition[lig - 1][col - 1] = lettre;
+        if (coordCorrectes(lig, col)) this.proposition[lig - 1][col - 1] = lettre;
     }
 }
