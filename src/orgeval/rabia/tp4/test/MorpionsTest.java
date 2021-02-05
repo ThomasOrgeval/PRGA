@@ -17,9 +17,7 @@ public class MorpionsTest {
     Bogue3 morpions3;
     Bogue4 morpions4;
     Bogue5 morpions5;
-    public static final int TAILLE = 3;
     public static final int NB_CASES = 9;
-
 
     @BeforeEach
     public void setUp() throws Exception {
