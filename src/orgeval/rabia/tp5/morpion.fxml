@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="orgeval.rabia.tp5.controller.ControlMorpion">
+    <center>
+        <GridPane fx:id="gridPane" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.40">
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+            </rowConstraints>
+            <columnConstraints>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <children>
+                <Label text="..." GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0"/>
+                <Label text="..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0"/>
+                <Label text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0"/>
+                <Label text="..." GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <Label text="..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <Label text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <Label text="..." GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+                <Label text="..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+                <Label text="..." GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label fx:id="nbCoups" text="Label1" GridPane.halignment="CENTER"/>
+                <Label fx:id="etatJeu" text="Label2" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                <Label fx:id="joueur" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
+            </children>
+        </GridPane>
+    </bottom>
+</BorderPane>
