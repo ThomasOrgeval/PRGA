@@ -11,8 +11,7 @@ public class MainMorpion extends Application {
 	@Override
 	public void start(Stage primaryStage)
 	{
-		try
-		{
+		try {
 	        primaryStage.setTitle("Morpions V1");
 			FXMLLoader loader = new FXMLLoader() ;
             loader.setLocation(MainMorpion.class.getResource("morpion.fxml"));

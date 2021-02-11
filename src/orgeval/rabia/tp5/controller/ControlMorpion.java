@@ -35,7 +35,7 @@ public class ControlMorpion {
         );
         calculEtatJeu();
         nbCoups.setText(String.valueOf(morpions.getNombreCoups()));
-        joueur.setText(morpions.getSymboleJValue());
+        joueur.textProperty().bind(morpions.getSymboleJ());
     }
 
     private void click(MouseEvent e) {

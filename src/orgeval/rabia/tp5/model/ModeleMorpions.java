@@ -109,10 +109,6 @@ public class ModeleMorpions implements SpecifModeleMorpions {
         return this.symboleJ;
     }
 
-    public String getSymboleJValue() {
-        return symboleJ.get();
-    }
-
     private void setSymboleJ(String s) {
         symboleJ.set(s);
     }
@@ -130,13 +126,5 @@ public class ModeleMorpions implements SpecifModeleMorpions {
 
     public ReadOnlyIntegerProperty morpionProperty(int ligne, int colonne) {
         return morpion[ligne - 1][colonne - 1].getReadOnlyProperty();
-    }
-
-    private int getVal(int ligne, int colonne) {
-        return morpion[ligne - 1][colonne - 1].get();
-    }
-
-    private void setVal(int ligne, int colonne, int val) {
-        morpion[ligne - 1][colonne - 1].set(val);
     }
 }
