@@ -6,8 +6,8 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class MainMorpion extends Application
-{
+public class MainMorpion extends Application {
+
 	@Override
 	public void start(Stage primaryStage)
 	{
@@ -17,7 +17,7 @@ public class MainMorpion extends Application
 			FXMLLoader loader = new FXMLLoader() ;
             loader.setLocation(MainMorpion.class.getResource("morpion.fxml"));
             Parent root = loader.load();
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,280,150);
 			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

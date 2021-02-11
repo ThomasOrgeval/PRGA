@@ -2,37 +2,32 @@ package orgeval.rabia.tp5.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import orgeval.rabia.tp5.model.ModeleMorpions;
-
-import java.awt.*;
 
 public class ControlMorpion {
 
     private ModeleMorpions morpions;
     @FXML
-    private final GridPane gridPane = new GridPane();
+    private GridPane gridPane;
     @FXML
-    private Label nbCoups;
-    @FXML
-    private Label etatJeu;
-    @FXML
-    private Label joueur;
+    private Label nbCoups, etatJeu, joueur;
 
     @FXML
     private void initialize() {
         morpions = new ModeleMorpions();
         for (Node n : gridPane.getChildren()) {
             n.setOnMouseClicked(this::click);
-            /*if (n instanceof Label) {
+            if (n instanceof Label) {
                 Label l = (Label) n;
                 int ligne = (int) l.getProperties().get("gridpane-row") + 1;
                 int colonne = (int) l.getProperties().get("gridpane-column") + 1;
-                modele.casePlateauProperty(ligne, colonne).addListener((obs, oldV, newV) -> {
-                    l.setText(modele.symboleJoueur(newV.intValue()));
-                })
-            }*/
+                morpions.morpionProperty(ligne, colonne).addListener((obs, oldV, newV) -> {
+                    l.setText(morpions.symboleJoueur(newV.intValue()));
+                });
+            }
         }
 
         morpions.nbCoupsProperty().addListener(
