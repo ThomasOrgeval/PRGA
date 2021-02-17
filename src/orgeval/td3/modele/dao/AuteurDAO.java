@@ -6,18 +6,19 @@ import orgeval.td3.modele.Livre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AuteurDAO {
 
-    public static void insAuteur(ArrayList<Auteur> auteurs) {
-        for (Auteur auteur : auteurs) {
-            if (!exist(auteur)) ConnectDB.execReqMaj("insert into AUTEUR_LIVRE values('" + auteur.getNom() + "', '" + auteur.getPrenom() + "')");
+    public static void insAuteur(HashMap<Auteur, String> auteurs) {
+        for (Auteur auteur : auteurs.keySet()) {
+            if (!exist(auteur)) ConnectDB.execReqMaj("insert into AUTEUR_LIVRE values('" + auteurs.get(auteur) +"', '" + auteur.getNom() + "', '" + auteur.getPrenom() + "')");
         }
     }
 
     private static boolean exist(Auteur auteur) {
         try {
-            ResultSet set = ConnectDB.execReqSelection("select * from AUTEUR_LIVRE where nom_auteur='" + auteur.getNom() + "', prenom_auteur='" + auteur.getPrenom() + "'");
+            ResultSet set = ConnectDB.execReqSelection("select * from AUTEUR_LIVRE where nom_auteur='" + auteur.getNom() + "' and prenom_auteur='" + auteur.getPrenom() + "'");
             if (set.next()) {
                 return true;
             }

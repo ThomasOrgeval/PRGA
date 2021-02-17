@@ -16,7 +16,7 @@ public class LivreNormDAO {
 
     private static boolean exist(Livre livre) {
         try {
-            ResultSet set = ConnectDB.execReqSelection("select * from LIVRE_NORMALISE where ISBN='" + livre.getIsbn() + "', titre='" + livre.getTitre() + "'");
+            ResultSet set = ConnectDB.execReqSelection("select * from LIVRE_NORMALISE where ISBN='" + livre.getIsbn() + "' and titre='" + livre.getTitre() + "'");
             if (set.next()) {
                 return true;
             }

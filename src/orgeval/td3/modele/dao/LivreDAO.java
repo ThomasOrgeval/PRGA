@@ -6,6 +6,7 @@ import orgeval.td3.modele.Livre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LivreDAO {
 
@@ -25,14 +26,14 @@ public class LivreDAO {
         return livres;
     }
 
-    public static ArrayList<Auteur> reqDistinctAuteurLivre() {
+    public static HashMap<Auteur, String> reqDistinctAuteurLivre() {
         Auteur aut;
-        ArrayList<Auteur> auteurs = new ArrayList<>();
-        ResultSet set = ConnectDB.execReqSelection("select distinct nom_auteur, prenom_auteur from LIVRE");
+        HashMap<Auteur, String> auteurs = new HashMap<>();
+        ResultSet set = ConnectDB.execReqSelection("select distinct nom_auteur, prenom_auteur, isbn from LIVRE");
         try {
             while (set.next()) {
                 aut = new Auteur(set.getString(1), set.getString(2));
-                auteurs.add(aut);
+                auteurs.put(aut, set.getString(3));
             }
             ConnectDB.connectClose();
         } catch (SQLException e) {
