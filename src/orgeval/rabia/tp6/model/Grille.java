@@ -1,21 +1,15 @@
 package orgeval.rabia.tp6.model;
 
-public class Grille {
-
-    protected int hauteur, largeur;
-    protected Case[][] tab;
+public class Grille<T> {
+    private final int hauteur, largeur;
+    protected Object[][] cellules;
 
     public Grille(int hauteur, int largeur) {
-        if (hauteur >= 0 && largeur >= 0) {
-            this.hauteur = hauteur;
-            this.largeur = largeur;
-            this.tab = new Case[hauteur][largeur];
-            for (int i = 0; i < hauteur; i++)
-                for (int j = 0; j < largeur; j++) {
-                    this.tab[i][j] = new Case();
-                    this.tab[i][j].setIndex(i + ", " + j);
-                }
-        } else throw new AssertionError("Une variable n'est pas bonne");
+        assert hauteur >= 0;
+        assert largeur >= 0;
+        this.hauteur = hauteur;
+        this.largeur = largeur;
+        cellules = new Object[hauteur][largeur];
     }
 
     public int getHauteur() {
@@ -27,23 +21,42 @@ public class Grille {
     }
 
     public boolean coordCorrectes(int lig, int col) {
-        return lig >= 1 && lig <= this.getHauteur() && col >= 1 && col <= this.getLargeur();
+        return 1 <= lig && lig <= getHauteur()
+                && 1 <= col && col <= getLargeur();
     }
 
-    public Case getCellule(int lig, int col) {
-        return this.tab[lig - 1][col - 1];
+    public void setCellule(int lig, int col, T ch) {
+        assert coordCorrectes(lig, col);
+        cellules[lig - 1][col - 1] = ch;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T getCellule(int lig, int col) {
+        assert coordCorrectes(lig, col);
+        return (T) cellules[lig - 1][col - 1];
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder res = new StringBuilder();
         for (int l = 1; l <= this.getHauteur(); l++) {
             for (int c = 1; c <= this.getLargeur(); c++) {
-                result.append(this.getCellule(l, c).getIndex());
-                if (c != this.getLargeur()) result.append("|");
+                if (c > 1) res.append('|');
+                res.append(this.getCellule(l, c));
             }
-            result.append("\n");
+            res.append('\n');
         }
-        return result.toString();
+        return res.toString();
+    }
+
+    public static void main(String[] args) {
+        Grille<String> maGrille = new Grille<>(3, 5);
+        for (int l = 1; l <= maGrille.getHauteur(); l++) {
+            String texteLigne = Integer.toString(l);
+            for (int c = 1; c <= maGrille.getLargeur(); c++) {
+                maGrille.setCellule(l, c, texteLigne + ',' + c);
+            }
+        }
+        System.out.println(maGrille);
     }
 }

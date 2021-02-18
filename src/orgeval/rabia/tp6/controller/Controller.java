@@ -42,11 +42,14 @@ public class Controller {
                 stackPane.setId(l + ":" + c);
                 stackPane.setOnMouseClicked(this::click);
                 stackPane.getStyleClass().add("sp");
-                if (motsCroises.estCaseNoire(l, c)) stackPane.getStyleClass().add("sp-noir");
+                if (motsCroises.estCaseNoire(l, c)) {
+                    stackPane.getStyleClass().add("sp-noir");
+                    stackPane.setDisable(true);
+                }
                 gridPane.add(stackPane, c - 1, l - 1);
 
                 Label label = new Label();
-                label.setText(Character.toString(motsCroises.getSolution(l, c))/*motsCroises.getIndex(l, c)*/);
+                label.setText(" "); //Character.toString(motsCroises.getProposition(l, c))/*motsCroises.getIndex(l, c)*/
                 stackPane.getChildren().add(label);
             }
         }
@@ -70,6 +73,7 @@ public class Controller {
         Node n = (Node) e.getSource();
         StackPane sp = (StackPane) n;
         Label l = (Label) sp.getChildren().get(0);
+        sp.getStyleClass().add("blue");
         System.out.println(n.getId());
 
         field.setEditable(true);
@@ -80,7 +84,15 @@ public class Controller {
 
     private void setText(Label l, String s) {
         if (!s.isEmpty()) {
-            l.setText(s);
+            l.setText(s.substring(0, 1));
+
+            char[] chars = s.toCharArray();
+            String[] ints = l.getParent().getId().split(":");
+            motsCroises.setProposition(Integer.parseInt(ints[0]), Integer.parseInt(ints[1]), chars[0]);
+
+            l.getParent().getStyleClass().clear();
+            l.getParent().getStyleClass().add("sp");
+
             field.clear();
             field.setEditable(false);
             button.setDisable(true);

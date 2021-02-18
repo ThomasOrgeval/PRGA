@@ -48,7 +48,6 @@ public class MotsCroisesDao {
         reqSelection = ConnectDB.execReqSelection("select t5m.ligne, t5m.colonne, t5m.horizontal, t5m.solution from tp5_grille\n" +
                 "inner join tp5_mot t5m on tp5_grille.num_grille = t5m.num_grille where tp5_grille.num_grille = '" + numGrille + "'");
         assert motsCroises != null;
-        motsCroises.setGrilleNoire();
         try {
             while (reqSelection.next()) {
                 char[] chars = reqSelection.getString(4).toCharArray();
