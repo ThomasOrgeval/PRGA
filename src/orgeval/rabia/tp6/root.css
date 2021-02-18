@@ -1,0 +1,16 @@
+.field {
+    -fx-background-color: white;
+    -fx-border-color: black;
+}
+
+.field:readonly {
+    -fx-border-color: white;
+}
+
+.sp {
+    -fx-border-color: black;
+}
+
+.sp-noir {
+    -fx-background-color: black;
+}
