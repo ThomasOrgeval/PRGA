@@ -8,38 +8,22 @@
             fx:controller="orgeval.rabia.tp6.controller.Controller">
     <center>
         <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefWidth="0.0"
-                  xmlns="http://javafx.com/javafx/8.0.40"/>
+                  xmlns="http://javafx.com/javafx/8.0.40">
+            <children>
+                <TextField prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            </children>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+        </GridPane>
     </center>
     <bottom>
         <GridPane prefHeight="64.0" prefWidth="424.0" vgap="50.0" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
             <children>
-                <Label fx:id="name" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
-                <TextField fx:id="field" prefHeight="25.0" GridPane.halignment="CENTER"/>
-                <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="70.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Button fx:id="button" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Ecrire"
-                                GridPane.columnIndex="1" GridPane.halignment="LEFT"/>
-                        <CheckBox fx:id="box" mnemonicParsing="false" text="Vertical" GridPane.halignment="CENTER"/>
-                        <Button fx:id="finish" mnemonicParsing="false" text="Terminer" GridPane.columnIndex="2"
-                                GridPane.halignment="RIGHT"/>
-                    </children>
-                </GridPane>
+                <CheckBox fx:id="box" mnemonicParsing="false" text="Vertical" GridPane.halignment="CENTER"/>
             </children>
             <padding>
                 <Insets bottom="10.0" left="5.0" right="5.0"/>

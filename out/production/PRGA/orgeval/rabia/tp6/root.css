@@ -1,20 +1,14 @@
 .field {
-    -fx-background-color: white;
     -fx-border-color: black;
 }
 
-.field:readonly {
-    -fx-border-color: white;
-}
-
-.sp {
-    -fx-border-color: black;
-}
-
-.sp-noir {
+.field-noir {
     -fx-background-color: black;
 }
 
-.blue {
-    -fx-background-color: #06a5cd;
+.field:focused {
+    -fx-background-color: #00a7ff;
+}
+.field-noir:focused {
+    -fx-background-color: black;
 }

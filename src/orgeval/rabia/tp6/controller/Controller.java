@@ -1,10 +1,8 @@
 package orgeval.rabia.tp6.controller;
 
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import orgeval.rabia.tp6.model.MotsCroises;
@@ -14,90 +12,61 @@ public class Controller {
 
     private MotsCroises motsCroises;
     @FXML
-    private TextField field;
-    @FXML
-    private Button button, finish;
-    @FXML
     private CheckBox box;
     @FXML
     private GridPane gridPane;
-    @FXML
-    private Label name;
 
     @FXML
     private void initialize() {
         //HashMap<Integer, String> map = MotsCroisesDao.dispoMotsCroises();
-        name.setText("Mots croisé sans nom");
-        gridPane.setPrefSize(800, 800);
-        gridPane.setMinSize(600, 600);
-        gridPane.setMaxSize(800, 800);
+        gridpane();
+    }
+
+    private void gridpane() {
+        TextField model = (TextField) gridPane.getChildren().get(0);
+        gridPane.getChildren().clear();
 
         motsCroises = MotsCroisesDao.getMotsCroises(MotsCroisesDao.getMotsCroisesRandom());
         for (int l = 1; l <= motsCroises.getHauteur(); l++) {
-            /*StackPane pane = new StackPane();
-            pane.setStyle("-fx-border-color: red;");
-            gridPane.add(pane, l-1, 0);*/
             for (int c = 1; c <= motsCroises.getLargeur(); c++) {
-                StackPane stackPane = new StackPane();
-                stackPane.setId(l + ":" + c);
-                stackPane.setOnMouseClicked(this::click);
-                stackPane.getStyleClass().add("sp");
+                TextField field = new TextField();
+                field.setOnMouseClicked(this::click);
+                field.getStyleClass().add("field");
+                field.setPrefSize(model.getPrefWidth(), model.getPrefHeight());
+                field.setTooltip(new Tooltip(getTooltip(l, c)));
                 if (motsCroises.estCaseNoire(l, c)) {
-                    stackPane.getStyleClass().add("sp-noir");
-                    stackPane.setDisable(true);
+                    field.getStyleClass().add("field-noir");
+                    field.setEditable(false);
                 }
-                gridPane.add(stackPane, c - 1, l - 1);
 
-                Label label = new Label();
-                label.setText(" "); //Character.toString(motsCroises.getProposition(l, c))/*motsCroises.getIndex(l, c)*/
-                stackPane.getChildren().add(label);
+                gridPane.add(field, c - 1, l - 1);
             }
         }
-        for (int l = 1; l <= motsCroises.getHauteur(); l++) {
-            gridPane.getColumnConstraints().add(new ColumnConstraints(2, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, HPos.CENTER, true));
-            gridPane.getRowConstraints().add(new RowConstraints(2, Control.USE_COMPUTED_SIZE, Double.POSITIVE_INFINITY, Priority.ALWAYS, VPos.CENTER, true));
+    }
+
+    private String getTooltip(int l, int c) {
+        StringBuilder ret = new StringBuilder();
+        ret.append("Ligne ").append(l).append(", colonne :").append(c);
+
+        if (motsCroises.getDefinition(l, c, true) != null && motsCroises.getDefinition(l, c, false) != null)
+            ret.append(" (horizontal / vertical) : ").append(motsCroises.getDefinition(l, c, true)).append(" / ").append(motsCroises.getDefinition(l, c, false));
+        else if (motsCroises.getDefinition(l, c, true) != null)
+            ret.append(" (horizontal) : ").append(motsCroises.getDefinition(l, c, true));
+        else if (motsCroises.getDefinition(l, c, false) != null)
+            ret.append(" (vertical) : ").append(motsCroises.getDefinition(l, c, false));
+        else return null;
+        return ret.toString();
+    }
+
+    @FXML
+    public void click(MouseEvent e) {
+        if (e.getButton() == MouseButton.MIDDLE) {
+            TextField field = (TextField) e.getSource();
+            int l = (int) field.getProperties().get("gridpane-row") + 1;
+            int c = (int) field.getProperties().get("gridpane-column") + 1;
+            motsCroises.reveler(l, c);
+            field.textProperty().bind(motsCroises.propositionProperty(l, c));
         }
-
-        field.setEditable(false);
-        field.getStyleClass().add("field");
-        button.setDisable(true);
-        box.setDisable(true);
-        finish.setOnAction(event -> finish());
-    }
-
-    private void finish() {
-
-    }
-
-    private void click(MouseEvent e) {
-        Node n = (Node) e.getSource();
-        StackPane sp = (StackPane) n;
-        Label l = (Label) sp.getChildren().get(0);
-        sp.getStyleClass().add("blue");
-        System.out.println(n.getId());
-
-        field.setEditable(true);
-        button.setDisable(false);
-        box.setDisable(false);
-        button.setOnMouseClicked(event -> setText(l, field.getText()));
-    }
-
-    private void setText(Label l, String s) {
-        if (!s.isEmpty()) {
-            l.setText(s.substring(0, 1));
-
-            char[] chars = s.toCharArray();
-            String[] ints = l.getParent().getId().split(":");
-            motsCroises.setProposition(Integer.parseInt(ints[0]), Integer.parseInt(ints[1]), chars[0]);
-
-            l.getParent().getStyleClass().clear();
-            l.getParent().getStyleClass().add("sp");
-
-            field.clear();
-            field.setEditable(false);
-            button.setDisable(true);
-            box.setDisable(true);
-        } else button.setOnMouseClicked(event -> setText(l, field.getText()));
     }
 
 }
