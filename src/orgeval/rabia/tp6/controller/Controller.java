@@ -29,25 +29,24 @@ public class Controller {
     @FXML
     private void initialize() {
         HashMap<Integer, String> map = MotsCroisesDao.dispoMotsCroises();
-        gridpane();
+        gridpane(MotsCroisesDao.getMotsCroisesRandom());
     }
 
-    private void gridpane() {
+    private void gridpane(int n) {
         TextField model = (TextField) gridPane.getChildren().get(0);
         gridPane.getChildren().clear();
 
-        motsCroises = MotsCroisesDao.getMotsCroises(MotsCroisesDao.getMotsCroisesRandom());
+        motsCroises = MotsCroisesDao.getMotsCroises(n);
         for (int l = 1; l <= motsCroises.getHauteur(); l++) {
             for (int c = 1; c <= motsCroises.getLargeur(); c++) {
                 TextField field = new TextField();
-                field.setId(l + ":" + c);
                 field.setOnMouseClicked(this::click);
                 field.setOnKeyPressed(this::write);
                 field.setPrefSize(model.getPrefWidth(), model.getPrefHeight());
                 field.setTooltip(new Tooltip(getTooltip(l, c)));
                 field.setEditable(false);
                 if (motsCroises.estCaseNoire(l, c)) {
-                    field.getStyleClass().add("field-noir");
+                    field.getStyleClass().add("field-black");
                     field.setFocusTraversable(false);
                 } else field.getStyleClass().add("field");
 
@@ -59,7 +58,7 @@ public class Controller {
     }
 
     private void newMots(ActionEvent e) {
-        gridpane();
+        gridpane(MotsCroisesDao.getMotsCroisesRandom());
     }
 
     private String getTooltip(int l, int c) {
@@ -84,6 +83,8 @@ public class Controller {
             int c = (int) field.getProperties().get("gridpane-column") + 1;
             motsCroises.reveler(l, c);
             field.textProperty().bind(motsCroises.propositionProperty(l, c));
+            field.getStyleClass().add("field-green");
+            movePlacement(field);
         }
     }
 
@@ -96,11 +97,8 @@ public class Controller {
         if (e.getCode().isLetterKey()) {
             motsCroises.setProposition(l, c, e.getText().toUpperCase().charAt(0));
             field.textProperty().bind(motsCroises.propositionProperty(l, c));
-
-            if (field.getSkin() instanceof BehaviorSkinBase) {
-                if (box.isSelected()) ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseDown();
-                else ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseRight();
-            }
+            field.getStyleClass().removeAll("field-green", "field-red");
+            movePlacement(field);
         } else if (e.getCode().isArrowKey()) {
             switch (e.getCode()) {
                 case UP:
@@ -117,16 +115,26 @@ public class Controller {
                     break;
             }
         } else if (e.getCode().equals(KeyCode.ENTER)) {
-
+            if (motsCroises.getProposition(l, c) == motsCroises.getSolution(l, c))
+                field.getStyleClass().add("field-green");
+            else field.getStyleClass().add("field-red");
+            movePlacement(field);
         } else if (e.getCode().equals(KeyCode.BACK_SPACE)) {
             motsCroises.setProposition(l, c, ' ');
             field.textProperty().bind(motsCroises.propositionProperty(l, c));
-
+            field.getStyleClass().removeAll("field-green", "field-red");
             if (field.getSkin() instanceof BehaviorSkinBase) {
                 if (box.isSelected()) ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseUp();
                 else ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseLeft();
             }
         } else field.clear();
+    }
+
+    private void movePlacement(TextField field) {
+        if (field.getSkin() instanceof BehaviorSkinBase) {
+            if (box.isSelected()) ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseDown();
+            else ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseRight();
+        }
     }
 
 }

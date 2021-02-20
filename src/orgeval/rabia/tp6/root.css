@@ -2,10 +2,18 @@
     -fx-border-color: black;
 }
 
-.field-noir {
+.field-black {
     -fx-background-color: black;
 }
 
 .field:focused {
     -fx-background-color: #007bff;
+}
+
+.field-red {
+    -fx-background-color: red;
+}
+
+.field-green {
+    -fx-background-color: green;
 }
