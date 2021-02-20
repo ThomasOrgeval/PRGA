@@ -1,6 +1,8 @@
 package orgeval.rabia.tp6.controller;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -8,11 +10,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import orgeval.rabia.tp6.model.MotsCroises;
 import orgeval.rabia.tp6.model.dao.MotsCroisesDao;
-
-import java.util.HashMap;
 
 public class Controller {
 
@@ -28,7 +28,8 @@ public class Controller {
 
     @FXML
     private void initialize() {
-        HashMap<Integer, String> map = MotsCroisesDao.dispoMotsCroises();
+        ObservableList<String> list = FXCollections.observableArrayList(MotsCroisesDao.dispoMotsCroises());
+        combo.setItems(list);
         gridpane(MotsCroisesDao.getMotsCroisesRandom());
     }
 

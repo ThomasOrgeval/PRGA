@@ -4,30 +4,42 @@ import orgeval.rabia.tp6.model.MotsCroises;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class MotsCroisesDao {
 
-    public static HashMap<Integer, String> dispoMotsCroises() {
-        HashMap<Integer, String> map = new HashMap<>();
-        ResultSet reqSelection = ConnectDB.execReqSelection("select num_grille, nom_grille from tp5_grille");
+    public static ArrayList<String> dispoMotsCroises() {
+        ArrayList<String> list = new ArrayList<>();
+        ResultSet reqSelection = ConnectDB.execReqSelection("select nom_grille from tp5_grille");
         try {
             while (reqSelection.next()) {
-                map.put(reqSelection.getInt(1), reqSelection.getString(2));
+                list.add(reqSelection.getString(1));
             }
         } catch (Exception e) {
             System.out.println("erreur reqSelection.next() pour la requête - select num_grille, nom_grille from tp5_grille");
             e.printStackTrace();
         }
         ConnectDB.connectClose();
-        return map;
+        return list;
+    }
+
+    public static int getMotsCroisesFromName(String name) {
+        ResultSet set = ConnectDB.execReqSelection("select num_grille from tp5_grille where nom_grille like '" + name + "'");
+        int ret = 0;
+        try {
+            if (set.next()) ret = set.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ConnectDB.connectClose();
+        return ret;
     }
 
     public static int getMotsCroisesRandom() {
         ResultSet set = ConnectDB.execReqSelection("select num_grille from tp5_grille order by rand() limit 1");
         int ret = 0;
         try {
-            if (set.next()) ret = set.getInt("num_grille");
+            if (set.next()) ret = set.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }

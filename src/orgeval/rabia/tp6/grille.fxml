@@ -37,7 +37,7 @@
          <children>
             <Button fx:id="button" mnemonicParsing="false" text="Nouvelle grille" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
             <CheckBox fx:id="box" mnemonicParsing="false" text="Vertical" GridPane.halignment="CENTER" />
-            <ComboBox fx:id="combo" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <ComboBox fx:id="combo" prefWidth="150.0" promptText="Choix grille" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </bottom>
