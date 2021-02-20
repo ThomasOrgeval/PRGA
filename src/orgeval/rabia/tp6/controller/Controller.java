@@ -1,12 +1,18 @@
 package orgeval.rabia.tp6.controller;
 
+import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import orgeval.rabia.tp6.model.MotsCroises;
 import orgeval.rabia.tp6.model.dao.MotsCroisesDao;
+
+import java.util.HashMap;
 
 public class Controller {
 
@@ -15,10 +21,14 @@ public class Controller {
     private CheckBox box;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Button button;
+    @FXML
+    private ComboBox<String> combo;
 
     @FXML
     private void initialize() {
-        //HashMap<Integer, String> map = MotsCroisesDao.dispoMotsCroises();
+        HashMap<Integer, String> map = MotsCroisesDao.dispoMotsCroises();
         gridpane();
     }
 
@@ -30,18 +40,26 @@ public class Controller {
         for (int l = 1; l <= motsCroises.getHauteur(); l++) {
             for (int c = 1; c <= motsCroises.getLargeur(); c++) {
                 TextField field = new TextField();
+                field.setId(l + ":" + c);
                 field.setOnMouseClicked(this::click);
-                field.getStyleClass().add("field");
+                field.setOnKeyPressed(this::write);
                 field.setPrefSize(model.getPrefWidth(), model.getPrefHeight());
                 field.setTooltip(new Tooltip(getTooltip(l, c)));
+                field.setEditable(false);
                 if (motsCroises.estCaseNoire(l, c)) {
                     field.getStyleClass().add("field-noir");
-                    field.setEditable(false);
-                }
+                    field.setFocusTraversable(false);
+                } else field.getStyleClass().add("field");
 
                 gridPane.add(field, c - 1, l - 1);
             }
         }
+
+        button.setOnAction(this::newMots);
+    }
+
+    private void newMots(ActionEvent e) {
+        gridpane();
     }
 
     private String getTooltip(int l, int c) {
@@ -67,6 +85,48 @@ public class Controller {
             motsCroises.reveler(l, c);
             field.textProperty().bind(motsCroises.propositionProperty(l, c));
         }
+    }
+
+    @FXML
+    public void write(KeyEvent e) {
+        TextField field = (TextField) e.getSource();
+        int l = (int) field.getProperties().get("gridpane-row") + 1;
+        int c = (int) field.getProperties().get("gridpane-column") + 1;
+
+        if (e.getCode().isLetterKey()) {
+            motsCroises.setProposition(l, c, e.getText().toUpperCase().charAt(0));
+            field.textProperty().bind(motsCroises.propositionProperty(l, c));
+
+            if (field.getSkin() instanceof BehaviorSkinBase) {
+                if (box.isSelected()) ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseDown();
+                else ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseRight();
+            }
+        } else if (e.getCode().isArrowKey()) {
+            switch (e.getCode()) {
+                case UP:
+                    ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseUp();
+                    break;
+                case DOWN:
+                    ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseDown();
+                    break;
+                case LEFT:
+                    ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseLeft();
+                    break;
+                case RIGHT:
+                    ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseRight();
+                    break;
+            }
+        } else if (e.getCode().equals(KeyCode.ENTER)) {
+
+        } else if (e.getCode().equals(KeyCode.BACK_SPACE)) {
+            motsCroises.setProposition(l, c, ' ');
+            field.textProperty().bind(motsCroises.propositionProperty(l, c));
+
+            if (field.getSkin() instanceof BehaviorSkinBase) {
+                if (box.isSelected()) ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseUp();
+                else ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseLeft();
+            }
+        } else field.clear();
     }
 
 }

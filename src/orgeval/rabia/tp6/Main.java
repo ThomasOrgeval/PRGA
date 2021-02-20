@@ -16,7 +16,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(orgeval.rabia.tp6.Main.class.getResource("grille.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 1000, 1000);
+            Scene scene = new Scene(root, 800, 800);
             scene.getStylesheets().add(getClass().getResource("root.css").toExternalForm());
             stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
             stage.setScene(scene);

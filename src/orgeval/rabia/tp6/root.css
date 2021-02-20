@@ -7,8 +7,5 @@
 }
 
 .field:focused {
-    -fx-background-color: #00a7ff;
-}
-.field-noir:focused {
-    -fx-background-color: black;
+    -fx-background-color: #007bff;
 }

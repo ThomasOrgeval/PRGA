@@ -98,7 +98,7 @@ public class MotsCroises implements SpecifMotsCroises {
     public void reveler(int lig, int col) {
         assert coordCorrectes(lig, col);
         assert !estCaseNoire(lig, col);
-        this.proposition.setCellule(lig, col, new SimpleStringProperty(String.valueOf(this.solution.getCellule(lig, col))));
+        this.proposition.setCellule(lig, col, new SimpleStringProperty(String.valueOf(this.solution.getCellule(lig, col)).toUpperCase()));
     }
 
     @Override
