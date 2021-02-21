@@ -23,18 +23,6 @@ public class MotsCroisesDao {
         return list;
     }
 
-    public static int getMotsCroisesFromName(String name) {
-        ResultSet set = ConnectDB.execReqSelection("select num_grille from tp5_grille where nom_grille like '" + name + "'");
-        int ret = 0;
-        try {
-            if (set.next()) ret = set.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        ConnectDB.connectClose();
-        return ret;
-    }
-
     public static int getMotsCroisesRandom() {
         ResultSet set = ConnectDB.execReqSelection("select num_grille from tp5_grille order by rand() limit 1");
         int ret = 0;
@@ -57,7 +45,7 @@ public class MotsCroisesDao {
             e.printStackTrace();
         }
 
-        reqSelection = ConnectDB.execReqSelection("select t5m.ligne, t5m.colonne, t5m.horizontal, t5m.solution from tp5_grille\n" +
+        reqSelection = ConnectDB.execReqSelection("select t5m.ligne, t5m.colonne, t5m.horizontal, t5m.solution, t5m.definition from tp5_grille\n" +
                 "inner join tp5_mot t5m on tp5_grille.num_grille = t5m.num_grille where tp5_grille.num_grille = '" + numGrille + "'");
         assert motsCroises != null;
         try {
@@ -65,6 +53,7 @@ public class MotsCroisesDao {
                 char[] chars = reqSelection.getString(4).toCharArray();
                 int lig = reqSelection.getInt(1), col = reqSelection.getInt(2);
 
+                motsCroises.setDefinition(lig, col, reqSelection.getInt(3) == 1, reqSelection.getString(5));
                 for (int i = 0; i < chars.length; i++) {
                     if (reqSelection.getInt(3) == 1) {
                         motsCroises.setSolution(lig, col + i, chars[i]); // Horizontal

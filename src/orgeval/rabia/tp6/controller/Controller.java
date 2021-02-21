@@ -30,6 +30,7 @@ public class Controller {
     private void initialize() {
         ObservableList<String> list = FXCollections.observableArrayList(MotsCroisesDao.dispoMotsCroises());
         combo.setItems(list);
+        combo.setOnAction(e -> gridpane(combo.getSelectionModel().getSelectedIndex() + 1));
         gridpane(MotsCroisesDao.getMotsCroisesRandom());
     }
 
@@ -64,7 +65,7 @@ public class Controller {
 
     private String getTooltip(int l, int c) {
         StringBuilder ret = new StringBuilder();
-        ret.append("Ligne ").append(l).append(", colonne :").append(c);
+        ret.append("Ligne ").append(l).append(", colonne ").append(c);
 
         if (motsCroises.getDefinition(l, c, true) != null && motsCroises.getDefinition(l, c, false) != null)
             ret.append(" (horizontal / vertical) : ").append(motsCroises.getDefinition(l, c, true)).append(" / ").append(motsCroises.getDefinition(l, c, false));

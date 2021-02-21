@@ -1,5 +1,7 @@
 .field {
     -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-font-size: 22px;
 }
 
 .field-black {
@@ -7,13 +9,13 @@
 }
 
 .field:focused {
-    -fx-background-color: #007bff;
+    -fx-background-color: #a5e9e9;
 }
 
 .field-red {
-    -fx-background-color: red;
+    -fx-background-color: #ff6868;
 }
 
 .field-green {
-    -fx-background-color: green;
+    -fx-background-color: #74ff74;
 }

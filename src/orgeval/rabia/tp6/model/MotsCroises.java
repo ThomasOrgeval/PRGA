@@ -69,18 +69,17 @@ public class MotsCroises implements SpecifMotsCroises {
         proposition.setCellule(lig, col, new SimpleStringProperty(String.valueOf(c)));
     }
 
-    public String getDefinition(int lig, int col, boolean horiz) {
+    public String getDefinition(int lig, int col, boolean b) {
         assert coordCorrectes(lig, col);
         assert !estCaseNoire(lig, col);
-        if (horiz) return horizontal.getCellule(lig, col);
-        else return vertical.getCellule(lig, col);
+        return b ? horizontal.getCellule(lig, col) : vertical.getCellule(lig, col);
     }
 
-    public void setDefinition(int lig, int col, boolean horiz, String def) {
+    public void setDefinition(int lig, int col, boolean b, String s) {
         assert coordCorrectes(lig, col);
         assert !estCaseNoire(lig, col);
-        if (horiz) horizontal.setCellule(lig, col, def);
-        else vertical.setCellule(lig, col, def);
+        if (b) horizontal.setCellule(lig, col, s);
+        else vertical.setCellule(lig, col, s);
     }
 
     public StringProperty propositionProperty(int lig, int col) {
