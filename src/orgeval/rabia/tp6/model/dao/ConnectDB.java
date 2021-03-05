@@ -27,20 +27,6 @@ public class ConnectDB {
         return resultatReq;
     }
 
-    // Fonction pour insérer/update des requêtes SQL
-    public static void execReqMaj(String req) {
-        connectDB();
-        try {
-            Statement s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            s.executeUpdate(req);
-            s.close();
-            connectClose();
-        } catch (Exception er) {
-            er.printStackTrace();
-            System.out.println("Échec requête : " + req);
-        }
-    }
-
     public static void connectClose() {
         try {
             connection.close();

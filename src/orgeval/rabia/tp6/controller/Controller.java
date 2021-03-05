@@ -42,15 +42,23 @@ public class Controller {
         for (int l = 1; l <= motsCroises.getHauteur(); l++) {
             for (int c = 1; c <= motsCroises.getLargeur(); c++) {
                 TextField field = new TextField();
-                field.setOnMouseClicked(this::click);
-                field.setOnKeyPressed(this::write);
                 field.setPrefSize(model.getPrefWidth(), model.getPrefHeight());
-                field.setTooltip(new Tooltip(getTooltip(l, c)));
                 field.setEditable(false);
                 if (motsCroises.estCaseNoire(l, c)) {
-                    field.getStyleClass().add("field-black");
                     field.setFocusTraversable(false);
-                } else field.getStyleClass().add("field");
+                    field.getStyleClass().add("field-black");
+                } else {
+                    field.setOnMouseClicked(this::click);
+                    field.setOnKeyPressed(this::write);
+                    field.setTooltip(new Tooltip(getTooltip(l, c)));
+                    field.textProperty().addListener((observable, oldValue, newValue) -> {
+                        /*ScaleTransition transition = new ScaleTransition(Duration.seconds(2), field);
+                        transition.setToX(1.2);
+                        transition.setToY(1.2);
+                        transition.play();*/
+                    });
+                    field.getStyleClass().add("field");
+                }
 
                 gridPane.add(field, c - 1, l - 1);
             }
@@ -105,15 +113,19 @@ public class Controller {
             switch (e.getCode()) {
                 case UP:
                     ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseUp();
+                    box.setSelected(true);
                     break;
                 case DOWN:
                     ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseDown();
+                    box.setSelected(true);
                     break;
                 case LEFT:
                     ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseLeft();
+                    box.setSelected(false);
                     break;
                 case RIGHT:
                     ((BehaviorSkinBase) field.getSkin()).getBehavior().traverseRight();
+                    box.setSelected(false);
                     break;
             }
         } else if (e.getCode().equals(KeyCode.ENTER)) {
