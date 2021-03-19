@@ -9,7 +9,8 @@
 }
 
 .field:focused {
-    -fx-background-color: #a5e9e9;
+    -fx-background-color: skyblue, derive(skyblue, 100%);
+    -fx-background-insets: 0, 10;
 }
 
 .field-red {

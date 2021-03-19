@@ -1,6 +1,7 @@
 package orgeval.rabia.tp6.controller;
 
 import com.sun.javafx.scene.control.skin.BehaviorSkinBase;
+import javafx.animation.ScaleTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 import orgeval.rabia.tp6.model.MotsCroises;
 import orgeval.rabia.tp6.model.dao.MotsCroisesDao;
 
@@ -52,10 +54,12 @@ public class Controller {
                     field.setOnKeyPressed(this::write);
                     field.setTooltip(new Tooltip(getTooltip(l, c)));
                     field.textProperty().addListener((observable, oldValue, newValue) -> {
-                        /*ScaleTransition transition = new ScaleTransition(Duration.seconds(2), field);
-                        transition.setToX(1.2);
-                        transition.setToY(1.2);
-                        transition.play();*/
+                        ScaleTransition transition = new ScaleTransition(Duration.seconds(1), field);
+                        transition.setFromX(0.5);
+                        transition.setFromY(0.5);
+                        transition.setToX(1);
+                        transition.setToY(1);
+                        transition.play();
                     });
                     field.getStyleClass().add("field");
                 }
